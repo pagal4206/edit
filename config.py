@@ -1,4 +1,6 @@
-BOT_TOKEN = "7944120107:AAHM6fIVjisVLsuShlaxWLv5Kw4tHeS3u88"
-MONGO_URI = "mongodb+srv://RUDRA_JAAT1:RUDRAJAAT@rudrajaat.zbir7lx.mongodb.net/?retryWrites=true&w=majority"
-DB_NAME = "edit"
-OWNER_ID = "7176027733"
+import os
+DB_NAME = os.getenv("DB_NAME", "edit")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+MONGO_URI = os.getenv("MONGO_URL")
+OWNER_ID = os.getenv("OWNER_ID")
+LOGGER_GROUP_ID = int(os.getenv("LOGGER_GROUP_ID"))

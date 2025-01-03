@@ -5,7 +5,7 @@ def handle_edited_message(bot, message):
     current_time = int(time.time())
     time_diff = current_time - original_time
 
-    if time_diff > 60:
+    if time_diff > 30:
         try:
             bot.delete_message(message.chat.id, message.message_id)
         except Exception as e:
