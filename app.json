@@ -28,7 +28,7 @@
   "formation": {
     "worker": {
       "quantity": 1,
-      "size": "standard"
+      "size": "Standard-1X"
     }
   },
   "buildpacks": [
