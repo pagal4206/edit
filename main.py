@@ -4,7 +4,7 @@ from rudra.start import send_start_message
 from rudra.delete_media_edits import handle_media_edited_message
 from rudra.logging import log_bot_start, log_user_join, log_bot_added_to_group, log_bot_removed_from_group
 from rudra.user import get_group_count, get_user_count, add_group, add_user
-from rudra.warn import warn_user, handle_solution_button
+from rudra.warn import warn_user
 from rudra.broadcast import send_broadcast_message
 
 bot = telebot.TeleBot(BOT_TOKEN)
@@ -67,9 +67,6 @@ def handle_broadcast(message):
     else:
         bot.reply_to(message, "You are not authorized to use this command.")
 
-@bot.callback_query_handler(func=lambda call: call.data == "start_solution")
-def on_solution_button(call):
-    handle_solution_button(bot, call)
 
 if __name__ == "__main__":
     log_bot_start(bot)
