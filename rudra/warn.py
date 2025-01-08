@@ -1,18 +1,17 @@
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
-from config import LOGGER_GROUP_ID
 
 def create_solution_button():
     """
     Creates an inline keyboard with the "Solution" button.
     """
     keyboard = InlineKeyboardMarkup()
-    button = InlineKeyboardButton("🚀 Solution", callback_data="start_solution")
+    button = InlineKeyboardButton("🚀 Solution", url="https://t.me/HINATA_VC_BOT?start=start")
     keyboard.add(button)
     return keyboard
 
 def warn_user(bot, message):
     """
-    Warns the user for sending an edited message and logs the event.
+    Warns the user for sending an edited message.
     """
     user = message.from_user
     try:
@@ -22,11 +21,6 @@ def warn_user(bot, message):
             f"⚠️ <b>{user.first_name}</b>, your message was deleted because it contained an <b>edited message</b>.",
             parse_mode="HTML",
             reply_markup=create_solution_button()
-        )
-        bot.send_message(
-            LOGGER_GROUP_ID,
-            f"⚠️ <b>{user.first_name}</b> (<code>{user.id}</code>) had their message deleted in <b>{message.chat.title}</b> because it was an edited message.",
-            parse_mode="HTML"
         )
     except Exception as e:
         print(f"Error deleting message: {e}")
