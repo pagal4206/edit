@@ -1,8 +1,8 @@
 import logging
-from telegram import Bot
+import telebot
 from config import LOGGING_GROUP_ID, BOT_TOKEN
 
-bot = Bot(token=BOT_TOKEN)
+bot = telebot.TeleBot(BOT_TOKEN)
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
