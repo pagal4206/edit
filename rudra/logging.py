@@ -46,3 +46,21 @@ def log_bot_removed_from_group(bot, chat_title, chat_id):
         bot,
         f"❌ Bot removed from group: <b>{chat_title}</b> (<code>{chat_id}</code>)."
     )
+
+def log_user_added(bot, user_id):
+    """
+    Logs when a new user is added.
+    """
+    log_event(
+        bot,
+        f"👤 New user added: <code>{user_id}</code>"
+    )
+
+def log_group_added(bot, group_id):
+    """
+    Logs when a new group is added.
+    """
+    log_event(
+        bot,
+        f"📚 New group added: <code>{group_id}</code>"
+    )
