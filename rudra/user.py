@@ -10,11 +10,13 @@ def add_user(user_id):
     if not users_collection.find_one({"user_id": user_id}):
         users_collection.insert_one({"user_id": user_id})
         print(f"User added: {user_id}")
+        log_user_added(bot, user_id)
 
 def add_group(group_id):
     if not groups_collection.find_one({"group_id": group_id}):
         groups_collection.insert_one({"group_id": group_id})
         print(f"Group added: {group_id}")
+        log_group_added(bot, group_id)
 
 def get_user_count():
     return users_collection.count_documents({})
