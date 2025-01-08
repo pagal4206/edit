@@ -1,66 +1,19 @@
-from config import LOGGER_GROUP_ID
+import logging
+from telegram import Bot
+from config import LOGGING_GROUP_ID, BOT_TOKEN
 
-def log_event(bot, message):
-    """
-    Sends a log message to the logger group.
-    """
+bot = Bot(token=BOT_TOKEN)
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
+
+def log_message(message):
     try:
-        bot.send_message(
-            chat_id=LOGGER_GROUP_ID,
-            text=message,
-            parse_mode="HTML"
-        )
+        bot.send_message(chat_id=LOGGING_GROUP_ID, text=message)
     except Exception as e:
-        print(f"Logging failed: {e}")
+        logging.error(f"Error sending log message: {e}")
 
-def log_bot_start(bot):
-    """
-    Logs when the bot starts.
-    """
-    log_event(bot, "🚀 <b>Bot has been started or restarted.</b>")
+def log_user_activity(user_id):
+    log_message(f"User {user_id} has started the bot.")
 
-def log_user_join(bot, new_member, chat_title):
-    """
-    Logs when a new user joins a group.
-    """
-    log_event(
-        bot,
-        f"👤 New user joined: <b>{new_member.first_name}</b> "
-        f"(<code>{new_member.id}</code>) in group <b>{chat_title}</b>."
-    )
-
-def log_bot_added_to_group(bot, chat_title, chat_id):
-    """
-    Logs when the bot is added to a group.
-    """
-    log_event(
-        bot,
-        f"➕ Bot added to group: <b>{chat_title}</b> (<code>{chat_id}</code>)."
-    )
-
-def log_bot_removed_from_group(bot, chat_title, chat_id):
-    """
-    Logs when the bot is removed from a group.
-    """
-    log_event(
-        bot,
-        f"❌ Bot removed from group: <b>{chat_title}</b> (<code>{chat_id}</code>)."
-    )
-
-def log_user_added(bot, user_id):
-    """
-    Logs when a new user is added.
-    """
-    log_event(
-        bot,
-        f"👤 New user added: <code>{user_id}</code>"
-    )
-
-def log_group_added(bot, group_id):
-    """
-    Logs when a new group is added.
-    """
-    log_event(
-        bot,
-        f"📚 New group added: <code>{group_id}</code>"
-    )
+def log_group_activity(group_id, action):
+    log_message(f"Bot has been {action} to group {group_id}.")
