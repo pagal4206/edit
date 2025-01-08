@@ -2,7 +2,6 @@ import telebot
 from config import BOT_TOKEN, OWNER_ID
 from rudra.start import send_start_message
 from rudra.delete_media_edits import handle_media_edited_message
-from rudra.logging import log_bot_start, log_user_join, log_bot_added_to_group, log_bot_removed_from_group
 from rudra.user import get_group_count, get_user_count, add_group, add_user
 from rudra.warn import warn_user
 from rudra.broadcast import send_broadcast_message
@@ -40,21 +39,6 @@ def handle_group_count(message):
     else:
         bot.send_message(message.chat.id, "You are not authorized to use this command.")
 
-@bot.message_handler(content_types=["new_chat_members"])
-def on_new_member(message):
-    for new_member in message.new_chat_members:
-        add_user(new_member.id)
-        add_group(message.chat.id)
-        log_user_join(bot, new_member, message.chat.title)
-
-@bot.message_handler(content_types=["left_chat_member"])
-def on_left_member(message):
-    log_bot_removed_from_group(bot, message.chat.title, message.chat.id)
-
-@bot.message_handler(content_types=["new_chat_members"])
-def on_new_chat_member(message):
-    log_bot_added_to_group(bot, message.chat.title, message.chat.id)
-
 @bot.message_handler(commands=['broadcast'])
 def handle_broadcast(message):
     if str(message.from_user.id) == OWNER_ID:
@@ -69,5 +53,4 @@ def handle_broadcast(message):
 
 
 if __name__ == "__main__":
-    log_bot_start(bot)
     bot.infinity_polling()
