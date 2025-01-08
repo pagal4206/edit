@@ -2,43 +2,86 @@ from pymongo import MongoClient
 from config import MONGO_URI, DB_NAME
 from rudra.logging import log_user_activity, log_group_activity
 
-client = MongoClient(MONGO_URI)
-db = client[DB_NAME]
+# Connect to MongoDB
+try:
+    client = MongoClient(MONGO_URI)
+    db = client[DB_NAME]
+    print("Connected to MongoDB")
+except Exception as e:
+    print(f"Error connecting to MongoDB: {e}")
+    raise
+
+# Collections
 users_collection = db["users"]
 groups_collection = db["groups"]
 
+# Add User
 def add_user(user_id):
-    if not users_collection.find_one({"user_id": user_id}):
-        users_collection.insert_one({"user_id": user_id})
-        log_user_activity(user_id)
-        print(f"User added: {user_id}")
-    else:
-        print(f"User {user_id} already exists.")
+    try:
+        user_id = str(user_id)  # Ensure user_id is a string
+        if not users_collection.find_one({"user_id": user_id}):
+            users_collection.insert_one({"user_id": user_id})
+            log_user_activity(user_id)
+            print(f"User added: {user_id}")
+        else:
+            print(f"User {user_id} already exists.")
+    except Exception as e:
+        print(f"Error adding user: {e}")
 
+# Add Group
 def add_group(group_id):
-    if not groups_collection.find_one({"group_id": group_id}):
-        groups_collection.insert_one({"group_id": group_id})
-        log_group_activity(group_id, action="added")
-        print(f"Group added: {group_id}")
-    else:
-        print(f"Group {group_id} already exists.")
+    try:
+        group_id = str(group_id)  # Ensure group_id is a string
+        if not groups_collection.find_one({"group_id": group_id}):
+            groups_collection.insert_one({"group_id": group_id})
+            log_group_activity(group_id, action="added")
+            print(f"Group added: {group_id}")
+        else:
+            print(f"Group {group_id} already exists.")
+    except Exception as e:
+        print(f"Error adding group: {e}")
 
+# Remove Group
 def remove_group(group_id):
-    if groups_collection.find_one({"group_id": group_id}):
-        groups_collection.delete_one({"group_id": group_id})
-        log_group_activity(group_id, action="removed")
-        print(f"Group removed: {group_id}")
-    else:
-        print(f"Group {group_id} not found.")
-        
+    try:
+        group_id = str(group_id)  # Ensure group_id is a string
+        if groups_collection.find_one({"group_id": group_id}):
+            groups_collection.delete_one({"group_id": group_id})
+            log_group_activity(group_id, action="removed")
+            print(f"Group removed: {group_id}")
+        else:
+            print(f"Group {group_id} not found.")
+    except Exception as e:
+        print(f"Error removing group: {e}")
+
+# Get User Count
 def get_user_count():
-    return users_collection.count_documents({})
+    try:
+        return users_collection.count_documents({})
+    except Exception as e:
+        print(f"Error fetching user count: {e}")
+        return 0
 
+# Get Group Count
 def get_group_count():
-    return groups_collection.count_documents({})
+    try:
+        return groups_collection.count_documents({})
+    except Exception as e:
+        print(f"Error fetching group count: {e}")
+        return 0
 
+# Get All Users
 def get_all_users():
-    return [user["user_id"] for user in users_collection.find()]
+    try:
+        return [user["user_id"] for user in users_collection.find()]
+    except Exception as e:
+        print(f"Error fetching all users: {e}")
+        return []
 
+# Get All Groups
 def get_all_groups():
-    return [group["group_id"] for group in groups_collection.find()]
+    try:
+        return [group["group_id"] for group in groups_collection.find()]
+    except Exception as e:
+        print(f"Error fetching all groups: {e}")
+        return []
