@@ -24,9 +24,3 @@ def warn_user(bot, message):
         )
     except Exception as e:
         print(f"Error deleting message: {e}")
-
-def handle_solution_button(bot, call):
-    """
-    Handles the "Solution" button callback.
-    """
-    bot.send_message(call.message.chat.id, "🔄 Bot started successfully! Enjoy the features.")
