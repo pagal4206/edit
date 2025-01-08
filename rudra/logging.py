@@ -1,6 +1,6 @@
 import logging
 import telebot
-from config import LOGGING_GROUP_ID, BOT_TOKEN
+from config import LOGGER_GROUP_ID, BOT_TOKEN
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
