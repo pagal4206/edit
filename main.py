@@ -1,10 +1,9 @@
 import telebot
-from config import BOT_TOKEN, OWNER_ID, LOGGER_GROUP_ID
+from config import BOT_TOKEN, OWNER_ID
 from rudra.start import send_start_message
-from rudra.delete_edits import handle_edited_message
 from rudra.delete_media_edits import handle_media_edited_message
-from rudra.logging import log_event, log_bot_start, log_user_join, log_bot_added_to_group, log_bot_removed_from_group
-from rudra.user import get_all_groups, get_all_users, get_group_count, get_user_count, add_group, add_user
+from rudra.logging import log_bot_start, log_user_join, log_bot_added_to_group, log_bot_removed_from_group
+from rudra.user import get_group_count, get_user_count, add_group, add_user
 from warn import warn_user, handle_solution_button
 from rudra.broadcast import send_broadcast_message
 
@@ -16,7 +15,7 @@ def handle_start(message):
 
 @bot.edited_message_handler(func=lambda message: True)
 def on_message_edited(message):
-    handle_edited_message(bot, message)
+    warn_user(bot, message)
 
 @bot.edited_message_handler(content_types=["photo", "video", "audio", "document", "voice"])
 def on_media_edited(message):
@@ -65,18 +64,8 @@ def handle_broadcast(message):
     else:
         bot.reply_to(message, "You are not authorized to use this command.")
 
-@bot.edited_message_handler(func=lambda message: True)
-def on_message_edited(message):
-    """
-    Handle edited messages and invoke the warn_user function.
-    """
-    warn_user(bot, message)
-
 @bot.callback_query_handler(func=lambda call: call.data == "start_solution")
 def on_solution_button(call):
-    """
-    Handle callback for the "Solution" button.
-    """
     handle_solution_button(bot, call)
 
 if __name__ == "__main__":
