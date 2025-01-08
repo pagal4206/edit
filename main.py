@@ -1,10 +1,10 @@
 import telebot
-from config import BOT_TOKEN, OWNER_ID
 from rudra.start import send_start_message
 from rudra.delete_media_edits import handle_media_edited_message
 from rudra.user import get_group_count, get_user_count, add_group, add_user
 from rudra.warn import warn_user
 from rudra.broadcast import send_broadcast_message
+from logging import log_user_activity, log_group_activity
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -12,6 +12,7 @@ bot = telebot.TeleBot(BOT_TOKEN)
 def handle_start(message):
     user_id = message.from_user.id
     add_user(user_id)
+    log_user_activity(user_id)
     send_start_message(bot, message)
 
 @bot.edited_message_handler(func=lambda message: True)
@@ -51,6 +52,12 @@ def handle_broadcast(message):
     else:
         bot.reply_to(message, "You are not authorized to use this command.")
 
+@bot.message_handler(commands=['group_add'])
+def handle_group_add(message):
+    group_id = message.chat.id
+    add_group(group_id)
+    log_group_activity(group_id, "added")
+    bot.reply_to(message, "Group has been added and activity logged.")
 
 if __name__ == "__main__":
     bot.infinity_polling()
