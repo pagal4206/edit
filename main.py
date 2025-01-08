@@ -5,6 +5,7 @@ from rudra.user import get_group_count, get_user_count, add_group, add_user
 from rudra.warn import warn_user
 from rudra.broadcast import send_broadcast_message
 from rudra.logging import log_user_activity, log_group_activity
+from config import BOT_TOKEN, OWNER_ID
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
