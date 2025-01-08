@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from config import MONGO_URI, DB_NAME
-from logging import log_user_activity, log_group_activity
+from logger import log_user_activity, log_group_activity
 
 client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
