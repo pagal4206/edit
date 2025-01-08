@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from config import MONGO_URI, DB_NAME
-from my_logging import log_user_activity, log_group_activity
+from rudra.logging import log_user_activity, log_group_activity
 
 client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
