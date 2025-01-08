@@ -9,7 +9,6 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 def log_message(chat_id, message, photo=None):
     try:
-        # Send photo if provided
         if photo:
             bot.send_photo(chat_id=chat_id, photo=photo, caption=message, parse_mode="Markdown")
         else:
@@ -21,13 +20,16 @@ def log_user_activity(user_id, username=None, first_name=None):
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     user_profile_photos = bot.get_user_profile_photos(user_id)
     profile_photo = user_profile_photos.photos[0][0].file_id if user_profile_photos.total_count > 0 else None
+    
+    mention = f"[{first_name}](tg://user?id={user_id})" if first_name else f"[User](tg://user?id={user_id})"
+    username_display = f"@{username}" if username else "Not Set"
 
     message = (
         f"✨ *User Activity Log*\n"
         f"━━━━━━━━━━━━━━━━━━━\n"
         f"👤 *User ID:* `{user_id}`\n"
-        f"🙋 *Name:* {first_name or 'Unknown'}\n"
-        f"🔗 *Username:* @{username if username else 'Not Set'}\n"
+        f"🙋 *Name:* {mention}\n"
+        f"🔗 *Username:* {username_display}\n"
         f"🔄 *Action:* Started the bot\n"
         f"⏰ *Time:* `{current_time}`\n"
         f"📡 *Bot Status:* Active\n"
