@@ -1,19 +1,20 @@
-# My Telegram Bot  
-> This is a **Telegram bot** that handles edited messages, media, and more.  
+# 🌟 **My Telegram Bot**  
+> A **powerful** Telegram bot that **handles edited messages, media**, and much more. 🚀
 
 ---
 
-## Deploy on Heroku  
-
-Click the button below to deploy this app on Heroku:  
+## 🚀 **Deploy on Heroku**  
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/pagal4206/edit)
 
 ---
 
-### Requirements  
-```diff
-- MongoDB URL  
-- Telegram Bot Token  
-- Owner ID  
-- Logger Group ID
+### 🧰 **Requirements**
+
+To run this bot, make sure you have the following set up:
+
+```bash
+MongoDB URL
+Telegram Bot Token
+Owner ID
+Logger Group ID
