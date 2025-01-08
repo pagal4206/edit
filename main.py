@@ -4,7 +4,7 @@ from rudra.start import send_start_message
 from rudra.delete_edits import handle_edited_message
 from rudra.delete_media_edits import handle_media_edited_message
 from rudra.logging import log_event, log_bot_start, log_user_join, log_bot_added_to_group, log_bot_removed_from_group
-from rudra.user import  get_all_groups, get_all_users, get_group_count, get_user_count, add_group, add_user
+from rudra.user import get_all_groups, get_all_users, get_group_count, get_user_count, add_group, add_user
 from rudra.broadcast import send_broadcast_message
 
 bot = telebot.TeleBot(BOT_TOKEN)
@@ -46,7 +46,11 @@ def on_new_member(message):
 
 @bot.message_handler(content_types=["left_chat_member"])
 def on_left_member(message):
-    log_user_left(bot, message.left_chat_member, message.chat.title)
+    log_bot_removed_from_group(bot, message.chat.title, message.chat.id)
+
+@bot.message_handler(content_types=["new_chat_members"])
+def on_new_chat_member(message):
+    log_bot_added_to_group(bot, message.chat.title, message.chat.id)
 
 @bot.message_handler(commands=['broadcast'])
 def handle_broadcast(message):
