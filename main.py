@@ -11,6 +11,8 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 @bot.message_handler(commands=["start"])
 def handle_start(message):
+    user_id = message.from_user.id
+    add_user(user_id)
     send_start_message(bot, message)
 
 @bot.edited_message_handler(func=lambda message: True)
@@ -19,6 +21,7 @@ def on_message_edited(message):
 
 @bot.edited_message_handler(content_types=["photo", "video", "audio", "document", "voice"])
 def on_media_edited(message):
+    warn_user(bot, message)
     handle_media_edited_message(bot, message)
 
 @bot.message_handler(commands=["user"])
